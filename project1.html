@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <title>Project 1</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,6 +12,211 @@
 </head>
 <body>
     <h1>Project 1</h1>
-    <h2>Project 1</h2>
-</body>
+    <h2>Overview</h2>
+    <p>This project was meant to align the seperated red, blue, and green channels of several given images in order to present completed color images. An important challenge here was understanding what kind of metric would be best suited to creting the least distorted/misaligned results. </p>
+    <h2>Approach</h2>
+    <h3>Initial approach</h3>
+    <p>The inital approach was a naive window search using the L2 metric. All it did was take a window of -15 to 15, then run across it to find the best displacemnt coordinates when using the L2 metric. I also ended up implemeting Normalized Cross-Correlation (NCC) as an alternate metric and using it in the same way, which yielded slightly better results. </p>
+    <h3>Pyramid</h3>
+    <p>The next step was to implement an image pyramid so that the images could be processed more accurately and faster. The function recursively found the best coordinates from a downsampled version of the image + reference (g/r and b) by a factor of two, then did a small search in a 3x3 window around the upsampled version of that coordinate to find the best displacement at the current resolution. At the smallest resolution (4 downsamples or under 100x100), it instead ran the larger search from step 1 on a 15x15 window.  </p>
+    <h3>Final Changes</h3>
+    <p>At this point, there were some issues with alignment and speed. One thing I changed was rolling and cropping the images in the main align function rather than in the NCC/L2 functions as I had before, which saved a lot of time by eliminating repeated overhead from rolling + cropping. I also took a more aggressive approach to cropping by getting rid of ~40% of the image away from the center. The goal of this was to focus on the center as much as possible as that was the core of the iamge. This also led to a big improvement in many of the larger images.</p>
+    
+    <h2>Results</h2>
+
+    <h3>Low-res photos</h3>
+    <div class="gallery">
+        <figure class="card">
+        <img class="thumb" src="images/cathedral_low_res.jpg" alt="Cathedral">
+        <figcaption>
+            <span class="title">cathedral.jpg</span>
+            <span class="subtitle">Green Offset: 2, 5</span>
+            <span class="subtitle">Red Offset: 3, 12</span>
+        </figcaption>
+        </figure>
+
+        <figure class="card">
+            <img class="thumb" src="images/melons_low_res.jpg" alt="Melons">
+            <figcaption>
+                <span class="title">melons.tif</span>
+                <span class="subtitle">Green Offset: 0 15</span>
+                <span class="subtitle">Red Offset: 12, 15</span>
+            </figcaption>
+        </figure>
+
+        <figure class="card">
+            <img class="thumb" src="images/tobolsk_low_res.jpg" alt="Tobolsk">
+            <figcaption>
+                <span class="title">tobolsk.jpg</span>
+                <span class="subtitle">Green Offset: 3, 3</span>
+                <span class="subtitle">Red Offset: 3, 7</span>
+            </figcaption>
+        </figure>
+    </div>
+
+    <h3>Main Examples</h3>
+    <div class="gallery">
+<figure class="card">
+    <img class="thumb" src="images/cathedral_aligned.jpg" alt="Cathedral">
+    <figcaption>
+        <span class="title">cathedral.jpg</span>
+        <span class="subtitle">Green Offset: 2, 5</span>
+        <span class="subtitle">Red Offset: 3, 12</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/melons_aligned.jpg" alt="Melons">
+    <figcaption>
+        <span class="title">melons.tif</span>
+        <span class="subtitle">Green Offset: 9, 84</span>
+        <span class="subtitle">Red Offset: 12, 141</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/tobolsk_aligned.jpg" alt="Tobolsk">
+    <figcaption>
+        <span class="title">tobolsk.jpg</span>
+        <span class="subtitle">Green Offset: 3, 3</span>
+        <span class="subtitle">Red Offset: 3, 7</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/church_aligned.jpg" alt="Church">
+    <figcaption>
+        <span class="title">church.tif</span>
+        <span class="subtitle">Green Offset: 4, 25</span>
+        <span class="subtitle">Red Offset: -4, 58</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/icon_aligned.jpg" alt="Icon">
+    <figcaption>
+        <span class="title">icon.tif</span>
+        <span class="subtitle">Green Offset: 18, 41</span>
+        <span class="subtitle">Red Offset: 23, 90</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/italil_aligned.jpg" alt="Italil">
+    <figcaption>
+        <span class="title">italil.tif</span>
+        <span class="subtitle">Green Offset: 22, 38</span>
+        <span class="subtitle">Red Offset: 36, 77</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/self_portrait_aligned.jpg" alt="Self Portrait">
+    <figcaption>
+        <span class="title">self_portrait.tif</span>
+        <span class="subtitle">Green Offset: 29, 77</span>
+        <span class="subtitle">Red Offset: 33, 141</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/monastery_aligned.jpg" alt="Monastery">
+    <figcaption>
+        <span class="title">monastery.jpg</span>
+        <span class="subtitle">Green Offset: 2, -3</span>
+        <span class="subtitle">Red Offset: 2, 3</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/siren_aligned.jpg" alt="Siren">
+    <figcaption>
+        <span class="title">siren.tif</span>
+        <span class="subtitle">Green Offset: -5, 49</span>
+        <span class="subtitle">Red Offset: -23, 96</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/emir_aligned.jpg" alt="Emir">
+    <figcaption>
+        <span class="title">emir.tif</span>
+        <span class="subtitle">Green Offset: 24, 48</span>
+        <span class="subtitle">Red Offset: -67, -122</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/lastochikino_aligned.jpg" alt="Lastochikino">
+    <figcaption>
+        <span class="title">lastochikino.tif</span>
+        <span class="subtitle">Green Offset: -2, -3</span>
+        <span class="subtitle">Red Offset: -8, 75</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/harvesters_aligned.jpg" alt="Harvesters">
+    <figcaption>
+        <span class="title">harvesters.tif</span>
+        <span class="subtitle">Green Offset: 17, 59</span>
+        <span class="subtitle">Red Offset: 15, 123</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/lugano_aligned.jpg" alt="Lugano">
+    <figcaption>
+        <span class="title">lugano.tif</span>
+        <span class="subtitle">Green Offset: -15, 40</span>
+        <span class="subtitle">Red Offset: -28, 93</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/three_generations_aligned.jpg" alt="Three Generations">
+    <figcaption>
+        <span class="title">three_generations.tif</span>
+        <span class="subtitle">Green Offset: 15, 50</span>
+        <span class="subtitle">Red Offset: 12, 109</span>
+    </figcaption>
+</figure>
+
+    </div>
+
+    <h3>Extras</h3>
+    <div class="gallery">
+        <figure class="card">
+    <img class="thumb" src="images/ostrovie_extra.jpg" alt="Ostrovie">
+    <figcaption>
+        <span class="title">ostrovie.tif</span>
+        <span class="subtitle">Green Offset: -16, 31</span>
+        <span class="subtitle">Red Offset: -25, 77</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/zakat_extra.jpg" alt="Zakat">
+    <figcaption>
+        <span class="title">zakat.tif</span>
+        <span class="subtitle">Green Offset: 23, 55</span>
+        <span class="subtitle">Red Offset: 49, 141</span>
+    </figcaption>
+</figure>
+
+<figure class="card">
+    <img class="thumb" src="images/dunaie_extra.jpg" alt="Dunaie">
+    <figcaption>
+        <span class="title">dunaie.tif</span>
+        <span class="subtitle">Green Offset: 51, 31</span>
+        <span class="subtitle">Red Offset: 101, 83</span>
+    </figcaption>
+</figure>
+
+    </div>
+    
+    <h2>Final Reflection</h2>
+    <p>Emir was one of the images that I was unable to successfully align. I think it may have been due to the differing brightness values, making the metrics that I used inadequeate</p>
+    <p>Melons was the other image I was dissatisfied with. The green channel was notably the most misaligned but I wasn't able to figure out why it was failing where the others weren't. I think it may also be related to the brightness.</p>
+
 </html>

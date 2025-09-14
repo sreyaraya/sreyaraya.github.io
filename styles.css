@@ -1,0 +1,70 @@
+:root {
+  --gap: 16px;
+  --card-bg: #fff;
+  --card-radius: 8px;
+  --caption-color: #222;
+  --caption-size: 14px;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  margin: 24px;
+  background: #f7f7f8;
+  color: #111;
+}
+
+/* grid container */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--gap);
+  align-items: start;
+}
+
+/* each card */
+figure.card {
+  width: 240px;
+  margin-right: 0px;
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(20,20,30,0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+
+/* image area */
+.card .thumb {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+/* caption */
+figcaption {
+  padding: 10px 12px;
+  font-size: var(--caption-size);
+  color: var(--caption-color);
+  line-height: 1.2;
+}
+
+.title {
+  font-weight: 600;
+  display: block;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 0.95em;
+  margin-top: 4px;
+}
+
+/* mobile tweaks */
+@media (max-width: 420px) {
+  :root { --gap: 10px; }
+  .gallery { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+}
