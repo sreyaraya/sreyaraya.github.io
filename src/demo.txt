@@ -1,0 +1,7 @@
+<pre className={`code-snippet language-python}`}>
+  <code>
+{`
+`}
+  </code>
+
+</pre>

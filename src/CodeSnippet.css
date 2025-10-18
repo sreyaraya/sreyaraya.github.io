@@ -1,0 +1,47 @@
+.code-snippet {
+  background-color: #161b22; /* dark card */
+  color: #e6edf3; /* light text */
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.95rem;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  border: 1px solid #1f2937;
+}
+
+/* Highlight some keywords manually (basic) */
+.code-snippet .keyword {
+  color: #3b82f6; /* blue */
+  font-weight: 600;
+}
+
+.code-snippet .comment {
+  color: #94a3b8; /* gray for comments */
+  font-style: italic;
+}
+
+/* Optional: add line numbers */
+.code-snippet {
+  counter-reset: line;
+}
+
+.code-snippet code {
+  display: block;
+}
+
+.code-snippet code > span {
+  display: block;
+  counter-increment: line;
+  padding-left: 2.5rem;
+  position: relative;
+}
+
+.code-snippet code > span::before {
+  content: counter(line);
+  position: absolute;
+  left: 0;
+  width: 2rem;
+  text-align: right;
+  color: #64748b; /* line number color */
+}
