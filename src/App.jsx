@@ -3,12 +3,14 @@
     import HomePage from './Home';
     import Proj2 from './Proj2';
     import Proj3 from './Proj3';
+    import Proj4 from './Proj4';
+    import Proj5 from './Proj5';
 
     function App() {
       return (
         <HashRouter>
           <Routes>
-            <Route path="/" element={<Proj3 />} />
+            <Route path="/" element={<Proj5 />} />
           </Routes>
         </HashRouter>
       );
